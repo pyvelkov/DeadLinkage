@@ -115,7 +115,7 @@ public class DeadLinkTest {
                 System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() +  RESET);
             }
         } catch (Exception e) {
-            System.err.println("Exception Thrown: " + e);
+            System.err.println("OOPS");
         }
     }
 }
