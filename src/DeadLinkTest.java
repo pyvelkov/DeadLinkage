@@ -30,11 +30,11 @@ public class DeadLinkTest {
             driver.quit();
             versionMessage();
         }
-        else if(args[0].equals("-f") && args[1].endsWith(".html")){
+        else if(args[0].equals("-f") || args[0].equals("--f") || args[0].equals("/f") && args[1].endsWith(".html")){
             Path pathFile = Paths.get(args[1]);
             driver.get(pathFile.toUri().toString());
         }
-        else if(args[0].equals("-u") && args[1].contains("http")){
+        else if(args[0].equals("-u") || args[0].equals("--u") || args[0].equals("/u") && args[1].contains("http")){
             driver.get(args[1]);
         }
         else{
@@ -115,7 +115,7 @@ public class DeadLinkTest {
                 System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() +  RESET);
             }
         } catch (Exception e) {
-            System.err.println("OOPS");
+            System.err.println("Exception Thrown: " + e);
         }
     }
 }
