@@ -3,6 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
@@ -94,28 +95,33 @@ public class DeadLinkTest {
         System.exit(0);
     }
 
-    public static void checkLink(String linkUrl)
-    {
+    public static void checkLink(String linkUrl) {
         try
         {
             URL url = new URL(linkUrl);
+
             HttpURLConnection httpURLConnect=(HttpURLConnection)url.openConnection();
             httpURLConnect.setRequestMethod("HEAD");
             httpURLConnect.connect();
+            httpURLConnect.setInstanceFollowRedirects(true);
 
-            if(httpURLConnect.getResponseCode() == 200)
+            if(httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226)
             {
                 System.out.println(GREEN + linkUrl + "   ---->   " + "[" + WHITE + GREEN_BACKGROUND + HttpURLConnection.HTTP_OK + RESET + GREEN + "] - " + httpURLConnect.getResponseMessage() + RESET);
             }
-            else if(httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 499)
+            else if(httpURLConnect.getResponseCode() >= 300 && httpURLConnect.getResponseCode() <= 308){
+                System.out.println(WHITE + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_MOVED_PERM + RESET + WHITE +"] - " + httpURLConnect.getResponseMessage() + RESET);
+            }
+            else if(httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 420)
             {
                 System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_NOT_FOUND + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
+            }
+            else if(httpURLConnect.getResponseCode() >= 500 && httpURLConnect.getResponseCode() <= 599){
+                System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_INTERNAL_ERROR + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
             }
             else{
                 System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() +  RESET);
             }
-        } catch (Exception e) {
-            System.err.println("Exception Thrown: " + e);
-        }
+        } catch (IOException ignored) {}
     }
 }
