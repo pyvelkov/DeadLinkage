@@ -12,18 +12,15 @@ import java.util.List;
 
 
 public class DeadLinkTest {
-
-    //colors
-    //text
     public static final String RED = "\033[0;31m";
     public static final String GREEN = "\033[0;32m";
     public static final String WHITE = "\033[0;37m";
     public static final String RESET = "\033[0m";
-    //bgd
     public static final String RED_BACKGROUND = "\033[41m";
     public static final String GREEN_BACKGROUND = "\033[42m";
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         WebDriver driver=new ChromeDriver();
 
         if (args.length == 0){
@@ -35,12 +32,10 @@ public class DeadLinkTest {
             versionMessage();
         }
         else if(args[0].equals("-f") || args[0].equals("--f") || args[0].equals("/f") && args[1].endsWith(".html")){
-            /*using relative path============================================*/
             Path pathFile = Paths.get(args[1]);
             driver.get(pathFile.toUri().toString());
         }
         else if(args[0].equals("-u") || args[0].equals("--u") || args[0].equals("/u") && args[1].contains("http")){
-            /*using website=================================================*/
             driver.get(args[1]);
         }
         else{
@@ -49,13 +44,16 @@ public class DeadLinkTest {
         }
 
         driver.manage().window().maximize();
+
         List<WebElement> links=driver.findElements(By.tagName("a"));
 
 
         for(int i = 0; i < links.size(); i++)
         {
             WebElement elem = links.get(i);
+
             String url = elem.getAttribute("href");
+
             checkLink(url);
         }
         driver.quit();
@@ -124,7 +122,6 @@ public class DeadLinkTest {
             else{
                 System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() +  RESET);
             }
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 }
