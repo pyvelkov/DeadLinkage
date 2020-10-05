@@ -3,6 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
@@ -22,46 +23,39 @@ public class DeadLinkTest {
     public static final String RED_BACKGROUND = "\033[41m";
     public static final String GREEN_BACKGROUND = "\033[42m";
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         WebDriver driver=new ChromeDriver();
 
         if (args.length == 0){
             driver.quit();
             helpMessage();
-            //System.exit(0);
         }
         else if (args[0].equals("-v")){
             driver.quit();
             versionMessage();
-            //System.exit(0);
         }
-        else if(args[0].equals("-f") && args[1].endsWith(".html")){
+        else if(args[0].equals("-f") || args[0].equals("--f") || args[0].equals("/f") && args[1].endsWith(".html")){
             /*using relative path============================================*/
             Path pathFile = Paths.get(args[1]);
             driver.get(pathFile.toUri().toString());
         }
-        else if(args[0].equals("-u") && args[1].contains("http")){
+        else if(args[0].equals("-u") || args[0].equals("--u") || args[0].equals("/u") && args[1].contains("http")){
             /*using website=================================================*/
             driver.get(args[1]);
         }
         else{
             driver.quit();
             helpMessage();
-            //System.exit(0);
         }
 
         driver.manage().window().maximize();
-
         List<WebElement> links=driver.findElements(By.tagName("a"));
 
 
         for(int i = 0; i < links.size(); i++)
         {
             WebElement elem = links.get(i);
-
             String url = elem.getAttribute("href");
-
             checkLink(url);
         }
         driver.quit();
@@ -103,37 +97,34 @@ public class DeadLinkTest {
         System.exit(0);
     }
 
-    public static void checkLink(String linkUrl)
-    {
+    public static void checkLink(String linkUrl) {
         try
         {
             URL url = new URL(linkUrl);
 
             HttpURLConnection httpURLConnect=(HttpURLConnection)url.openConnection();
-
             httpURLConnect.setRequestMethod("HEAD");
-
-            //use this so I don't get my ip blacklisted for scraping too much
-            //httpURLConnect.setConnectTimeout(1000);
-
             httpURLConnect.connect();
+            httpURLConnect.setInstanceFollowRedirects(true);
 
-            if(httpURLConnect.getResponseCode() == 200)
+            if(httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226)
             {
                 System.out.println(GREEN + linkUrl + "   ---->   " + "[" + WHITE + GREEN_BACKGROUND + HttpURLConnection.HTTP_OK + RESET + GREEN + "] - " + httpURLConnect.getResponseMessage() + RESET);
             }
-            /*else if(httpURLConnect.getResponseCode()>=300 && httpURLConnect.getResponseCode()<=399){
-                System.out.println(RED + linkUrl + "   ---->   " + WHITE + RED_BACKGROUND + httpURLConnect.getResponseMessage() +  " - " + HttpURLConnection.HTTP_MOVED_PERM + RESET);
-            }*/
-            else if(httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 499)
+            else if(httpURLConnect.getResponseCode() >= 300 && httpURLConnect.getResponseCode() <= 308){
+                System.out.println(WHITE + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_MOVED_PERM + RESET + WHITE +"] - " + httpURLConnect.getResponseMessage() + RESET);
+            }
+            else if(httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 420)
             {
                 System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_NOT_FOUND + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
+            }
+            else if(httpURLConnect.getResponseCode() >= 500 && httpURLConnect.getResponseCode() <= 599){
+                System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_INTERNAL_ERROR + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
             }
             else{
                 System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() +  RESET);
             }
-        } catch (Exception e) {
-            System.err.println("OOPS");
+        } catch (IOException ignored) {
         }
     }
 }
