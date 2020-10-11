@@ -47,16 +47,23 @@ public class DeadLinkTest {
 
         List<WebElement> links=driver.findElements(By.tagName("a"));
 
-
+        boolean exitCode = true;
         for(int i = 0; i < links.size(); i++)
         {
-            WebElement elem = links.get(i);
+            try {
+                WebElement elem = links.get(i);
 
-            String url = elem.getAttribute("href");
+                String url = elem.getAttribute("href");
 
-            checkLink(url);
+                checkLink(url);
+                exitCode = true;
+            } catch (Exception ExceptionExit){
+                exitCode = false;
+            }
         }
         driver.quit();
+        if(exitCode) System.exit(0);
+        else System.exit(1);
     }
 
     private static void versionMessage() {
