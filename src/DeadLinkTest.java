@@ -21,6 +21,7 @@ public class DeadLinkTest {
 
     public static void main(String[] args)
     {
+        String argPrintFlag = "";
         WebDriver driver=new ChromeDriver();
 
         if (args.length == 0){
@@ -31,12 +32,54 @@ public class DeadLinkTest {
             driver.quit();
             versionMessage();
         }
-        else if(args[0].equals("-f") || args[0].equals("--f") || args[0].equals("/f") && args[1].endsWith(".html")){
-            Path pathFile = Paths.get(args[1]);
-            driver.get(pathFile.toUri().toString());
+        //check files
+        else if(args[0].equals("-f") || args[0].equals("--f") || args[0].equals("/f") /*&& args[1].endsWith(".html")*/){
+            if(args[1].endsWith(".html")) {
+                Path pathFile = Paths.get(args[1]);
+                driver.get(pathFile.toUri().toString());
+                argPrintFlag = "--all";
+            }
+            //this is if --all urlFlag argument is provided
+            else if(args[1].equals("-all") || args[1].equals("--all") || args[1].equals("/all")){
+                Path pathFile = Paths.get(args[2]);
+                driver.get(pathFile.toUri().toString());
+                argPrintFlag = "--all";
+            }
+            //this is if --bad urlFlag argument is provided
+            else if(args[1].equals("-bad") || args[1].equals("--bad") || args[1].equals("/bad")){
+                Path pathFile = Paths.get(args[2]);
+                driver.get(pathFile.toUri().toString());
+                argPrintFlag = "--bad";
+            }
+            //this is if --bad urlFlag argument is provided
+            else if(args[1].equals("-good") || args[1].equals("--good") || args[1].equals("/good")){
+                Path pathFile = Paths.get(args[2]);
+                driver.get(pathFile.toUri().toString());
+                argPrintFlag = "--good";
+            }
         }
-        else if(args[0].equals("-u") || args[0].equals("--u") || args[0].equals("/u") && args[1].contains("http")){
-            driver.get(args[1]);
+        //check URLS
+        else if(args[0].equals("-u") || args[0].equals("--u") || args[0].equals("/u") /*&& args[1].contains("http")*/){
+            //this is the default case if no urlFlag argument is provided
+            if(args[1].contains("http")) {
+                driver.get(args[1]);
+                argPrintFlag = "--all";
+            }
+            //this is if --all urlFlag argument is provided
+            else if(args[1].equals("-all") || args[1].equals("--all") || args[1].equals("/all")){
+                driver.get(args[2]);
+                argPrintFlag = "--all";
+            }
+            //this is if --bad urlFlag argument is provided
+            else if(args[1].equals("-bad") || args[1].equals("--bad") || args[1].equals("/bad")){
+                driver.get(args[2]);
+                argPrintFlag = "--bad";
+            }
+            //this is if --bad urlFlag argument is provided
+            else if(args[1].equals("-good") || args[1].equals("--good") || args[1].equals("/good")){
+                driver.get(args[2]);
+                argPrintFlag = "--good";
+            }
         }
         else{
             driver.quit();
@@ -55,7 +98,7 @@ public class DeadLinkTest {
 
                 String url = elem.getAttribute("href");
 
-                checkLink(url);
+                checkLink(url, argPrintFlag);
                 exitCode = true;
             } catch (Exception ExceptionExit){
                 exitCode = false;
@@ -102,9 +145,13 @@ public class DeadLinkTest {
         System.exit(0);
     }
 
-    public static void checkLink(String linkUrl) {
+    public static void checkLink(String linkUrl, String argPrintFlag) {
         try
         {
+            //check for email links
+            if(linkUrl.startsWith("mailto:")){
+                linkUrl = linkUrl.replace("mailto:","");
+            }
             URL url = new URL(linkUrl);
 
             HttpURLConnection httpURLConnect=(HttpURLConnection)url.openConnection();
@@ -112,22 +159,39 @@ public class DeadLinkTest {
             httpURLConnect.connect();
             httpURLConnect.setInstanceFollowRedirects(true);
 
-            if(httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226)
-            {
-                System.out.println(GREEN + linkUrl + "   ---->   " + "[" + WHITE + GREEN_BACKGROUND + HttpURLConnection.HTTP_OK + RESET + GREEN + "] - " + httpURLConnect.getResponseMessage() + RESET);
-            }
-            else if(httpURLConnect.getResponseCode() >= 300 && httpURLConnect.getResponseCode() <= 308){
-                System.out.println(WHITE + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_MOVED_PERM + RESET + WHITE +"] - " + httpURLConnect.getResponseMessage() + RESET);
-            }
-            else if(httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 420)
-            {
-                System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_NOT_FOUND + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
-            }
-            else if(httpURLConnect.getResponseCode() >= 500 && httpURLConnect.getResponseCode() <= 599){
-                System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_INTERNAL_ERROR + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
-            }
-            else{
-                System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() +  RESET);
+            //good links
+            switch (argPrintFlag) {
+                case "--good":
+                    if (httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226) {
+                        System.out.println(GREEN + linkUrl + "   ---->   " + "[" + WHITE + GREEN_BACKGROUND + HttpURLConnection.HTTP_OK + RESET + GREEN + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    }
+                    break;
+                //bad links
+                case "--bad":
+                    if (httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 420) {
+                        System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_NOT_FOUND + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    }
+                    if (httpURLConnect.getResponseCode() >= 500 && httpURLConnect.getResponseCode() <= 599) {
+                        System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_INTERNAL_ERROR + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    }
+                    break;
+                //all links
+                case "--all":
+                    if (httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226) {
+                        System.out.println(GREEN + linkUrl + "   ---->   " + "[" + WHITE + GREEN_BACKGROUND + HttpURLConnection.HTTP_OK + RESET + GREEN + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    } else if (httpURLConnect.getResponseCode() >= 300 && httpURLConnect.getResponseCode() <= 308) {
+                        System.out.println(WHITE + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_MOVED_PERM + RESET + WHITE + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    } else if (httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 420) {
+                        System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_NOT_FOUND + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    } else if (httpURLConnect.getResponseCode() >= 500 && httpURLConnect.getResponseCode() <= 599) {
+                        System.out.println(RED + linkUrl + "   ---->   " + "[" + WHITE + RED_BACKGROUND + HttpURLConnection.HTTP_INTERNAL_ERROR + RESET + RED + "] - " + httpURLConnect.getResponseMessage() + RESET);
+                    } else {
+                        System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() + RESET);
+                    }
+                    break;
+                default:
+                    System.out.println("No Links Found");
+                    throw new IllegalStateException("Unexpected value: " + argPrintFlag);
             }
         } catch (IOException ignored) {}
     }
