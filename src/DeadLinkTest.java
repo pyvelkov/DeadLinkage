@@ -96,8 +96,7 @@ public class DeadLinkTest {
             WebElement elem = links.get(i);
 
             String url = elem.getAttribute("href");
-
-
+            
             checkLink(url, argPrintFlag);
         }
         driver.quit();
