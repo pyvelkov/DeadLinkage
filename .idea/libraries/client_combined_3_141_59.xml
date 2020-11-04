@@ -2,6 +2,7 @@
   <library name="client-combined-3.141.59">
     <CLASSES>
       <root url="jar://$USER_HOME$/Desktop/coding/selenium/client-combined-3.141.59.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../JSONSimple/json-simple-1.1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -1,8 +1,14 @@
 package DeadLinkage;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static DeadLinkage.AnsiColors.*;
 
@@ -75,5 +81,56 @@ public class CheckLink {
                 System.out.println(WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() + RESET);
             }
         } catch (IOException e) { }
+    }
+
+    public static boolean JsonLinkLogic(ArrayList<String> jsonLinks, ArrayList<String> ignoreLinks, String argPrintFlag, WebDriver driver){
+        int postCounter = 1;
+        boolean exitCode = true;
+        for (String jsonLink : jsonLinks){
+            System.out.println("Post: " + postCounter);
+            driver.get(jsonLink);
+            List<WebElement> links = driver.findElements(By.tagName("a"));
+            for (WebElement link : links) {
+                try {
+                    WebElement elem = link;
+
+                    String url = elem.getAttribute("href");
+                    for (String ignoreLink : ignoreLinks) {
+                        if (url.startsWith(ignoreLink)) {
+                            url = url.replace(ignoreLink, "");
+                        }
+                    }
+                    checkLink(url, argPrintFlag);
+                    exitCode = true;
+                } catch (Exception ExceptionExit) {
+                    exitCode = false;
+                }
+            }
+            postCounter++;
+        }
+        return exitCode;
+    }
+
+    public static boolean checkLinkLogic(ArrayList<String> ignoreLinks, String argPrintFlag, WebDriver driver){
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+        boolean exitCode = true;
+        for (int i = 0; i < links.size(); i++) {
+            try {
+                WebElement elem = links.get(i);
+
+                String url = elem.getAttribute("href");
+
+                for (String ignoreLink : ignoreLinks) {
+                    if (url.startsWith(ignoreLink)) {
+                        url = url.replace(ignoreLink, "");
+                    }
+                }
+                checkLink(url, argPrintFlag);
+                exitCode = true;
+            } catch (Exception ExceptionExit) {
+                exitCode = false;
+            }
+        }
+        return exitCode;
     }
 }
