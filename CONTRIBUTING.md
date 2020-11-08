@@ -36,7 +36,7 @@ These instructions will get you a copy of the project up and running on your loc
 
  1. Go to File->Settings->Plugins
  2. Select Marketplace and type in "Google", the plugin should pop up first.
-![enter image description here](https://raw.githubusercontent.com/pyvelkov/DeadLinkage/master/0.1%20MDassets/chromedriver%2004.JPG?token=ANEOJ52FGLYAC4N3HPBOSH27OTUTW)
+![enter image description here](https://raw.githubusercontent.com/pyvelkov/DeadLinkage/master/0.1%20MDassets/Contributing/intellij-google-format.JPG)
  3. Click on install and restart the IDE
 
 ##### Using Google-Java-Format CLI
@@ -51,13 +51,14 @@ These instructions will get you a copy of the project up and running on your loc
 
  1. Go to File->Settings->Plugins
  2. Select Marketplace and type in "SpotBugs", the plugin should pop up first.
-![enter image description here](https://raw.githubusercontent.com/pyvelkov/DeadLinkage/master/0.1%20MDassets/chromedriver%2004.JPG?token=ANEOJ52FGLYAC4N3HPBOSH27OTUTW)
+![enter image description here](https://raw.githubusercontent.com/pyvelkov/DeadLinkage/master/0.1%20MDassets/Contributing/intellij-spotBugs.JPG)
  3. Click on install and restart the IDE
 
 ##### Using SpotBugs CLI/GUI
 
  1. Open Windows Terminal
  2. Run the SpotBugs GUI (Easier to work with) `java -jar /path/to/spotbugs-4.x.x/lib/spotbugs.jar`
+![enter image description here](https://raw.githubusercontent.com/pyvelkov/DeadLinkage/master/0.1%20MDassets/Contributing/intellij-spotBugs-gui-from-cli.JPG)
  3. If you do not have SpotBugs installed on your IDE, you must use this to fix potential bugs before making a PR.
     1. [SpotBugs Usage](https://spotbugs.readthedocs.io/en/latest/gui.html)
 
