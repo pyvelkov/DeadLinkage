@@ -1,13 +1,11 @@
 package DeadLinkage;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 public class LoadIgnoreFileTest {
 
-    @Test
-    public void loadFileIgnore() {
-        
-    }
+  @Test
+  public void loadFileIgnore() {}
 }
