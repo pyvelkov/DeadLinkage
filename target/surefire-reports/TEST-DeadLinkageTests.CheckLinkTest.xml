@@ -65,6 +65,6 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="DeadLinkageTests.CheckLinkTest" name="badLink" time="0.399"/>
-  <testcase classname="DeadLinkageTests.CheckLinkTest" name="goodLink" time="0.017"/>
+  <testcase classname="DeadLinkageTests.CheckLinkTest" name="goodLink" time="0.399"/>
+  <testcase classname="DeadLinkageTests.CheckLinkTest" name="badLink" time="0.017"/>
 </testsuite>

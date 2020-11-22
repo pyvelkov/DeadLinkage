@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DeadLinkage</a> &gt; <a href="index.source.html" class="el_package">DeadLinkage</a> &gt; <span class="el_source">JsonReader.java</span></div><h1>JsonReader.java</h1><pre class="source lang-java linenums">package DeadLinkage;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+<span class="nc" id="L12">public class JsonReader {</span>
+  public static ArrayList&lt;String&gt; jsonCheckLink() {
+<span class="nc" id="L14">    ArrayList&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L15">    String inline = &quot;&quot;;</span>
+<span class="nc" id="L16">    String baseURL = &quot;http://localhost:3000/posts/&quot;;</span>
+    try {
+<span class="nc" id="L18">      URL url = new URL(baseURL);</span>
+<span class="nc" id="L19">      HttpURLConnection conn = (HttpURLConnection) url.openConnection();</span>
+<span class="nc" id="L20">      conn.setRequestMethod(&quot;GET&quot;);</span>
+<span class="nc" id="L21">      conn.connect();</span>
+
+<span class="nc" id="L23">      int responsecode = conn.getResponseCode();</span>
+
+<span class="nc bnc" id="L25" title="All 2 branches missed.">      if (responsecode != 200) throw new RuntimeException(&quot;HttpResponseCode: &quot; + responsecode);</span>
+      else {
+<span class="nc" id="L27">        Scanner sc = new Scanner(url.openStream());</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        while (sc.hasNext()) {</span>
+<span class="nc" id="L29">          inline += sc.nextLine();</span>
+        }
+<span class="nc" id="L31">        sc.close();</span>
+      }
+
+<span class="nc" id="L34">      JSONParser parser = new JSONParser();</span>
+<span class="nc" id="L35">      JSONArray jarr = (JSONArray) parser.parse(inline);</span>
+
+      // {&quot;id&quot;:&quot;403b73803f&quot;,&quot;url&quot;:&quot;/posts/403b73803f&quot;}
+<span class="nc bnc" id="L38" title="All 2 branches missed.">      for (int i = 0; i &lt; jarr.size(); i++) {</span>
+<span class="nc" id="L39">        JSONObject jsonObj = (JSONObject) jarr.get(i);</span>
+<span class="nc" id="L40">        String ID = (String) jsonObj.get(&quot;id&quot;);</span>
+<span class="nc" id="L41">        result.add(baseURL + ID);</span>
+      }
+
+      // disconnect connection
+<span class="nc" id="L45">      conn.disconnect();</span>
+<span class="nc" id="L46">    } catch (Exception e) {</span>
+<span class="nc" id="L47">      e.printStackTrace();</span>
+<span class="nc" id="L48">    }</span>
+
+<span class="nc" id="L50">    return result;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

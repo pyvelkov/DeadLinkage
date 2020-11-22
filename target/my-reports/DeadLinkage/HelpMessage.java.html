@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HelpMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DeadLinkage</a> &gt; <a href="index.source.html" class="el_package">DeadLinkage</a> &gt; <span class="el_source">HelpMessage.java</span></div><h1>HelpMessage.java</h1><pre class="source lang-java linenums">package DeadLinkage;
+
+import static DeadLinkage.AnsiColors.*;
+
+<span class="nc" id="L5">public class HelpMessage {</span>
+  public static void helpMessage() {
+<span class="nc" id="L7">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*******************************************************************************&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L12">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*                                 HELP MENU                                   *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L17">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*******************************************************************************&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L22">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* Please enter an argument after command!                                     *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L27">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*                                                                             *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L32">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* The command arguments accepted are as follow:                               *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L37">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*                                                                             *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L42">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* arg1: &quot;
+            + GREEN
+            + RED_BACKGROUND
+            + &quot;-u&quot;
+            + RESET
+            + RED_BACKGROUND
+            + &quot;,&quot;
+            + GREEN
+            + RED_BACKGROUND
+            + &quot; -f&quot;
+            + RESET
+            + RED_BACKGROUND
+            + &quot; arg2: URL, index.html                                          *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L59">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* arg1 takes the format either URL '-u' or local file in current dir '-f'     *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L64">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* arg2 depending on format of arg1 takes (url or file) ending with '.html'    *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L69">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*                                                                             *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L74">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* e.g.                                                                        *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L79">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*                                                                             *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L84">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* java -jar DeadLinkage.jar -u https://github.com/pyvelkov                    *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L89">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* java -jar DeadLinkage.jar -f index.html                                     *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L94">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*                                                                             *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L99">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* To check current program version:                                           *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L104">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;* java -jar DeadLinkage.jar -v                                                *&quot;
+            + RESET
+            + &quot; &quot;);
+<span class="nc" id="L109">    System.out.println(</span>
+        RED_BACKGROUND
+            + &quot;*******************************************************************************&quot;
+            + RESET);
+<span class="nc" id="L113">    System.out.println();</span>
+<span class="nc" id="L114">    System.exit(0);</span>
+<span class="nc" id="L115">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
