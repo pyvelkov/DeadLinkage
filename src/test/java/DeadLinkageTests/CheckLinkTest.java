@@ -25,19 +25,19 @@ public class CheckLinkTest {
   @Test
   public void goodLink() throws Exception {
     String url = "http://www.google.ca";
-              URL u = PowerMockito.mock(URL.class);
-      PowerMockito.whenNew(URL.class).withArguments(url).thenReturn(u);
-      HttpURLConnection huc = PowerMockito.mock(HttpURLConnection.class);
-      PowerMockito.when(u.openConnection()).thenReturn(huc);
-      PowerMockito.when(huc.getResponseCode()).thenReturn(200);
-      PowerMockito.when(huc.getResponseMessage())
+    URL u = PowerMockito.mock(URL.class);
+    PowerMockito.whenNew(URL.class).withArguments(url).thenReturn(u);
+    HttpURLConnection huc = PowerMockito.mock(HttpURLConnection.class);
+    PowerMockito.when(u.openConnection()).thenReturn(huc);
+    PowerMockito.when(huc.getResponseCode()).thenReturn(200);
+    PowerMockito.when(huc.getResponseMessage())
         .thenReturn("200 - This is a mocked test on google.ca");
 
-      String expectedStr = (url + " " + huc.HTTP_OK);
+    String expectedStr = (url + " " + huc.HTTP_OK);
 
-      // make sure the mocked connection is an instance of the HttpUrlConnection object
+    // make sure the mocked connection is an instance of the HttpUrlConnection object
     assertTrue(u.openConnection() instanceof HttpURLConnection);
-    //make sure that goodLink is returning what it is supposed to (200 - 226)
+    // make sure that goodLink is returning what it is supposed to (200 - 226)
     Assert.assertEquals(expectedStr, CheckLink.goodLink(url, huc));
   }
 
@@ -58,8 +58,6 @@ public class CheckLinkTest {
     // make sure the mocked connection is an instance of the HttpUrlConnection object
     assertTrue(u.openConnection() instanceof HttpURLConnection);
     // make sure that bad link is returning what it is supposed to (400 - 420) or (500 - 599)
-    assertThat(
-        CheckLink.badLink(url, huc),
-        anyOf(is(expectedStr404), is(expectedStr500)));
+    assertThat(CheckLink.badLink(url, huc), anyOf(is(expectedStr404), is(expectedStr500)));
   }
 }

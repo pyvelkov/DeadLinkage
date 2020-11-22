@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class LoadIgnoreFileTest {
 
-    //LoadIgnoreFile lif = new LoadIgnoreFile();
+  // LoadIgnoreFile lif = new LoadIgnoreFile();
   @Test
   public void loadFileIgnore() throws IOException {
     String filePassed = "ignore-urls.txt";
@@ -19,9 +19,9 @@ public class LoadIgnoreFileTest {
 
     returned = LoadIgnoreFile.loadFileIgnore(filePassed);
 
-      for (String s : returned) {
-          //System.out.println(s);
-          assertTrue(s.startsWith("http://") || s.startsWith("https://"));
-      }
+    for (String s : returned) {
+      // System.out.println(s);
+      assertTrue(s.startsWith("http://") || s.startsWith("https://"));
+    }
   }
 }
