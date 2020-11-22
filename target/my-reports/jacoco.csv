@@ -4,6 +4,6 @@ DeadLinkage,DeadLinkage,HelpMessage,65,0,0,0,23,0,2,0,2,0
 DeadLinkage,DeadLinkage,AnsiColors,3,0,0,0,1,0,1,0,1,0
 DeadLinkage,DeadLinkage,LinkArgumentParser,277,0,40,0,48,0,23,0,3,0
 DeadLinkage,DeadLinkage,JsonReader,111,0,6,0,25,0,5,0,2,0
-DeadLinkage,DeadLinkage,LoadIgnoreFile,6,39,1,7,3,7,2,4,1,1
+DeadLinkage,DeadLinkage,LoadIgnoreFile,6,37,1,7,3,7,2,4,1,1
 DeadLinkage,DeadLinkage,CheckLink,460,100,46,4,86,8,30,2,5,2
 DeadLinkage,DeadLinkage,DeadLinkTest,186,0,34,0,39,0,19,0,2,0
