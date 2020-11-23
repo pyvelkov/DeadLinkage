@@ -43,7 +43,8 @@ public class CheckLink {
     }
   }
 
-  public static String goodLink (String linkUrl, HttpURLConnection httpURLConnect) throws IOException {
+  public static String goodLink(String linkUrl, HttpURLConnection httpURLConnect)
+      throws IOException {
     try {
       if (httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226) {
         System.out.println(
@@ -63,10 +64,11 @@ public class CheckLink {
       }
     } catch (IOException e) {
     }
-      return (linkUrl + " " + httpURLConnect.getResponseCode());
+    return (linkUrl + " " + httpURLConnect.getResponseCode());
   }
 
-  public static String badLink(String linkUrl, HttpURLConnection httpURLConnect) throws IOException {
+  public static String badLink(String linkUrl, HttpURLConnection httpURLConnect)
+      throws IOException {
     try {
       if (httpURLConnect.getResponseCode() >= 400 && httpURLConnect.getResponseCode() <= 420) {
         System.out.println(
@@ -82,7 +84,7 @@ public class CheckLink {
                 + "] - "
                 + httpURLConnect.getResponseMessage()
                 + RESET);
-          return (linkUrl + " " + httpURLConnect.HTTP_NOT_FOUND);
+        return (linkUrl + " " + httpURLConnect.HTTP_NOT_FOUND);
       }
       if (httpURLConnect.getResponseCode() >= 500 && httpURLConnect.getResponseCode() <= 599) {
         System.out.println(
@@ -98,14 +100,14 @@ public class CheckLink {
                 + "] - "
                 + httpURLConnect.getResponseMessage()
                 + RESET);
-          return (linkUrl + " " + httpURLConnect.HTTP_INTERNAL_ERROR);
+        return (linkUrl + " " + httpURLConnect.HTTP_INTERNAL_ERROR);
       }
     } catch (IOException e) {
     }
-      return (linkUrl + " " + httpURLConnect.getResponseCode());
+    return (linkUrl + " " + httpURLConnect.getResponseCode());
   }
 
-  public static void allLinks(String linkUrl, HttpURLConnection httpURLConnect) {
+  public static String allLinks(String linkUrl, HttpURLConnection httpURLConnect) throws IOException {
     try {
       if (httpURLConnect.getResponseCode() >= 200 && httpURLConnect.getResponseCode() <= 226) {
         System.out.println(
@@ -121,6 +123,7 @@ public class CheckLink {
                 + "] - "
                 + httpURLConnect.getResponseMessage()
                 + RESET);
+        return (linkUrl + " " + httpURLConnect.HTTP_OK);
       } else if (httpURLConnect.getResponseCode() >= 300
           && httpURLConnect.getResponseCode() <= 308) {
         System.out.println(
@@ -136,6 +139,7 @@ public class CheckLink {
                 + "] - "
                 + httpURLConnect.getResponseMessage()
                 + RESET);
+        return (linkUrl + " " + httpURLConnect.HTTP_MOVED_PERM);
       } else if (httpURLConnect.getResponseCode() >= 400
           && httpURLConnect.getResponseCode() <= 420) {
         System.out.println(
@@ -151,6 +155,7 @@ public class CheckLink {
                 + "] - "
                 + httpURLConnect.getResponseMessage()
                 + RESET);
+        return (linkUrl + " " + httpURLConnect.HTTP_NOT_FOUND);
       } else if (httpURLConnect.getResponseCode() >= 500
           && httpURLConnect.getResponseCode() <= 599) {
         System.out.println(
@@ -166,12 +171,14 @@ public class CheckLink {
                 + "] - "
                 + httpURLConnect.getResponseMessage()
                 + RESET);
+        return (linkUrl + " " + httpURLConnect.HTTP_INTERNAL_ERROR);
       } else {
         System.out.println(
             WHITE + linkUrl + "   ---->   " + httpURLConnect.getResponseMessage() + RESET);
       }
     } catch (IOException e) {
     }
+    return (linkUrl + " " + httpURLConnect.getResponseMessage());
   }
 
   public static boolean jsonLinkLogic(

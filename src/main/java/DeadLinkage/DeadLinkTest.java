@@ -24,7 +24,7 @@ public class DeadLinkTest {
     String argPrintFlag;
     boolean exitCode = true;
     int ignoreFlag = 0;
-    ArrayList<String> ignoreLinks = new ArrayList<String>();
+    ArrayList<String> ignoreLinks = new ArrayList<>();
 
     // headless driver options
     WebDriver driver;
