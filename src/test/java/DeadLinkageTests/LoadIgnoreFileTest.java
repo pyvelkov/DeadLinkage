@@ -1,7 +1,9 @@
 package DeadLinkageTests;
 
 import DeadLinkage.LoadIgnoreFile;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertTrue;
 
 public class LoadIgnoreFileTest {
+
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   // LoadIgnoreFile lif = new LoadIgnoreFile();
   @Test
@@ -22,6 +27,7 @@ public class LoadIgnoreFileTest {
     for (String s : returned) {
       // System.out.println(s);
       assertTrue(s.startsWith("http://") || s.startsWith("https://"));
+      assertTrue(!s.startsWith("#"));
     }
   }
 }
