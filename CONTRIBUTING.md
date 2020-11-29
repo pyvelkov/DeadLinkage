@@ -63,3 +63,28 @@ These instructions will get you a copy of the project up and running on your loc
     1. [SpotBugs Usage](https://spotbugs.readthedocs.io/en/latest/gui.html)
 
 Congratulations. You are now set up to use the DeadLinkage tool.
+
+#### Running Tests Before Making a Commit
+
+Before you contribute a commit to this repository, you must be sure that everything works how it is supposed to.
+Although various tests and compilations are done when making a pull request to the master branch on this repo, it is highly recommended to run local tests as well.
+
+In order to run local tests using maven the following can be done:
+
+* Run all test classes in the project
+ ```
+ mvn test
+ ```
+ 
+* Run a single test class
+ ```
+ mvn -Dtest=LinkArgumentParserTest test
+ ``` 
+"LinkArgumentParserTest" is an example you can exchange with any new class created/existing. 
+
+* Run a single test in a class
+ ```
+ mvn -Dtest=LinkArgumentParserTest#urlArgParser_noSpecifier test 
+ ```
+"#" specifies which test method you would like to run. You can exchange "urlArgParser_noSpecifier" with any method inside the specified class.
+
